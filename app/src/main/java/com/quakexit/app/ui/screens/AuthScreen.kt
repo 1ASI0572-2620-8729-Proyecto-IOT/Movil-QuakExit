@@ -3,14 +3,16 @@
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Sensors
+import androidx.compose.foundation.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.quakexit.app.R
 import com.quakexit.app.data.model.Roles
 import com.quakexit.app.ui.components.*
 import com.quakexit.app.ui.theme.QxColors
@@ -38,8 +40,7 @@ fun AuthScreen(vm: AuthViewModel = viewModel()) {
         verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(Icons.Filled.Sensors, null, tint = QxColors.Accent, modifier = Modifier.size(56.dp))
-        Text("QuakExit", style = MaterialTheme.typography.headlineLarge)
+        Image(painterResource(R.drawable.logo_quakexit), "QuakExit", Modifier.fillMaxWidth().height(160.dp), contentScale = ContentScale.Fit)
         Text("Monitoreo sísmico y evacuación asistida", color = QxColors.TextMuted, style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(8.dp))
         QxCard {
@@ -74,3 +75,4 @@ fun AuthScreen(vm: AuthViewModel = viewModel()) {
         }
     }
 }
+

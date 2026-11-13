@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,8 @@ fun AuthScreen(vm: AuthViewModel = viewModel()) {
         verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(painterResource(R.drawable.logo_quakexit), "QuakExit", Modifier.fillMaxWidth().height(160.dp), contentScale = ContentScale.Fit)
+        Image(painterResource(R.drawable.logo_quakexit), "QuakExit", Modifier.height(120.dp), contentScale = ContentScale.Fit)
+        Text("QuakExit", style = MaterialTheme.typography.headlineLarge, color = Color.White)
         Text("Monitoreo sísmico y evacuación asistida", color = QxColors.TextMuted, style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(8.dp))
         QxCard {
@@ -75,4 +77,5 @@ fun AuthScreen(vm: AuthViewModel = viewModel()) {
         }
     }
 }
+
 

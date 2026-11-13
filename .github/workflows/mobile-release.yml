@@ -1,0 +1,56 @@
+﻿name: Production Mobile Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  VERSION: v1.0.0
+  # Definir la variable de repositorio API_BASE_URL con la URL pública de Render (termina en /api/v1/)
+  API_BASE_URL: ${{ vars.API_BASE_URL }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.1.0
+
+      - name: Run unit tests
+        run: gradle :app:testDebugUnitTest --no-daemon
+
+      - name: Build APK
+        run: |
+          if [ -n "$API_BASE_URL" ]; then
+            gradle :app:assembleDebug -PAPI_BASE_URL="$API_BASE_URL" --no-daemon
+          else
+            gradle :app:assembleDebug --no-daemon
+          fi
+
+      - name: Generate sha256
+        run: |
+          cd app/build/outputs/apk/debug
+          sha256sum app-debug.apk > app-debug.apk.sha256
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: QuakExit Mobile Release ${{ env.VERSION }}
+          make_latest: true
+          generate_release_notes: true
+          files: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/debug/app-debug.apk.sha256

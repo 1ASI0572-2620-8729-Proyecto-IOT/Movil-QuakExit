@@ -15,7 +15,8 @@ android {
         versionCode = 1
         versionName = "1.0"
         // URL base configurable: emulador por defecto; cambiar por la URL de Render o desde Ajustes.
-        buildConfigField("String", "DEFAULT_BASE_URL", "\"http://10.0.2.2:8080/api/v1/\"")
+        val baseUrl = (project.findProperty("API_BASE_URL") as String?) ?: "http://10.0.2.2:8080/api/v1/"
+        buildConfigField("String", "DEFAULT_BASE_URL", "\"$baseUrl\"")
     }
     buildFeatures { compose = true; buildConfig = true }
     compileOptions {
@@ -43,4 +44,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     testImplementation("junit:junit:4.13.2")
 }
+
 
